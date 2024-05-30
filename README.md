@@ -1,79 +1,33 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# rn_injum
+ChatGPT를 이용한 예약 어플
 
-# Getting Started
+# 1차 프로젝트 목적 (24.05.28 작성)
+# 점보기 예약 시스템
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## 프로젝트 목적
+이 앱은 사용자가 무당과의 점을 보기 위해 예약을 손쉽게 할 수 있도록 돕는 것을 목적으로 합니다.
 
-## Step 1: Start the Metro Server
+## 타겟 사용자
+- **일반 사용자**: 점을 보고자 하는 사용자들
+- **무당**: 자신의 서비스를 제공하고 예약을 관리하고자 하는 무당들
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## 주요 기능
+### 무당 등록
+- 무당은 앱에 접속하여 자신의 프로필을 생성하고, 서비스 정보(예: 점 보는 방법, 특화된 서비스 등)를 등록할 수 있습니다.
 
-To start Metro, run the following command from the _root_ of your React Native project:
+### 예약 기능
+- 사용자는 무당의 프로필을 검색하고, 가능한 날짜와 시간을 선택하여 예약을 진행할 수 있습니다.
 
-```bash
-# using npm
-npm start
+### 푸시 기능
+- 예약 시간이 다가오거나 무당이 예약을 확인했을 때 사용자에게 알림을 보내는 기능을 포함합니다.
 
-# OR using Yarn
-yarn start
-```
+## 사용 시나리오
+### 무당 등록
+- 무당은 앱에 접속하여 필요한 개인 정보와 서비스 관련 정보를 입력하고 프로필을 등록합니다.
 
-## Step 2: Start your Application
+### 사용자 예약
+- 사용자는 앱에서 무당을 검색하고, 관심 있는 무당의 프로필을 클릭합니다. 사용자는 무당의 가능한 날짜와 시간을 확인하고, 앱을 통해 예약을 진행합니다.
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
-
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### For iOS
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+### 푸시 알림
+- 예약이 성공적으로 등록되면, 사용자와 무당 모두에게 예약 확인 알림이 발송됩니다. 예약 일정에 가까워질 때 추가적인 알림이 발송되어 양쪽 모두 예약 시간을 잊지 않도록 합니다.
+============================================================================================================================================================
