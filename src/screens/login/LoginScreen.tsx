@@ -8,23 +8,34 @@ import {
   StyleSheet,
   ImageBackground,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useAuthStore} from '../../store/authStore';
+import {RootStackParamList} from '../../navigation/types';
+
+// Define the types for the navigation prop
+type LoginScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'Login'
+>;
 
 const LoginScreen: React.FC = () => {
-  // 초기 이메일과 비밀번호 설정
   const [email, setEmail] = useState('user@example.com');
   const [password, setPassword] = useState('password123');
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
-  const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
+  const {setIsAuthenticated} = useAuthStore();
+  const navigation = useNavigation<LoginScreenNavigationProp>();
 
   const validateEmail = (email: string) => {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(String(email).toLowerCase());
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const isEmailValid = validateEmail(email);
     const isPasswordValid = password.length >= 6;
 
@@ -44,9 +55,16 @@ const LoginScreen: React.FC = () => {
       return;
     }
 
-    // Assuming the credentials are correct, navigate to the Home screen
+    setLoading(true);
+
+    // Simulating an async login request
+    await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate a network request
+
+    setIsAuthenticated(true);
+    setLoading(false);
+
     Alert.alert('Login Successful', 'You have successfully logged in.', [
-      {text: 'OK', onPress: () => navigation.replace('Home')},
+      // {text: 'OK', onPress: () => navigation.replace('HomeTab')},
     ]);
   };
 
@@ -56,38 +74,42 @@ const LoginScreen: React.FC = () => {
       style={styles.background}
       resizeMode="cover">
       <SafeAreaView style={styles.container}>
-        <View style={styles.innerContainer}>
-          <TextInput
-            style={[styles.input, !emailValid && styles.errorInput]}
-            placeholder="Email"
-            placeholderTextColor="#ffcc66"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            value={email}
-            onChangeText={text => {
-              setEmail(text);
-              if (!emailValid) {
-                setEmailValid(validateEmail(text));
-              }
-            }}
-          />
-          <TextInput
-            style={[styles.input, !passwordValid && styles.errorInput]}
-            placeholder="Password"
-            placeholderTextColor="#ffcc66"
-            secureTextEntry
-            value={password}
-            onChangeText={text => {
-              setPassword(text);
-              if (!passwordValid) {
-                setPasswordValid(text.length >= 6);
-              }
-            }}
-          />
-          <TouchableOpacity style={styles.button} onPress={handleLogin}>
-            <Text style={styles.buttonText}>Login</Text>
-          </TouchableOpacity>
-        </View>
+        {loading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : (
+          <View style={styles.innerContainer}>
+            <TextInput
+              style={[styles.input, !emailValid && styles.errorInput]}
+              placeholder="Email"
+              placeholderTextColor="#ffcc66"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              value={email}
+              onChangeText={text => {
+                setEmail(text);
+                if (!emailValid) {
+                  setEmailValid(validateEmail(text));
+                }
+              }}
+            />
+            <TextInput
+              style={[styles.input, !passwordValid && styles.errorInput]}
+              placeholder="Password"
+              placeholderTextColor="#ffcc66"
+              secureTextEntry
+              value={password}
+              onChangeText={text => {
+                setPassword(text);
+                if (!passwordValid) {
+                  setPasswordValid(text.length >= 6);
+                }
+              }}
+            />
+            <TouchableOpacity style={styles.button} onPress={handleLogin}>
+              <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </SafeAreaView>
     </ImageBackground>
   );

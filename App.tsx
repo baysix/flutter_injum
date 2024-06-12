@@ -1,33 +1,29 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
+import {useAuthStore} from './src/store/authStore';
 import HomeStackNavigator from './src/navigation/HomeStackNavigator';
 import DashboardStackNavigator from './src/navigation/DashboardStackNavigator';
-import AuthStackNavigator from './src/navigation/AuthStackNavigator'; // Import the Auth stack
+import AuthStackNavigator from './src/navigation/AuthStackNavigator';
+import LoadingIndicator from './src/components/indicator/LoadingIndicator';
 
 const Tab = createBottomTabNavigator();
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const {isAuthenticated, checkLoginStatus} = useAuthStore();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // const checkLoginStatus = async () => {
-    //   try {
-    //     const token = await AsyncStorage.getItem('userToken');
-    //     setIsAuthenticated(!!token);
-    //   } catch (e) {
-    //     setIsAuthenticated(false);
-    //   }
-    // };
+    const initializeAuth = async () => {
+      await checkLoginStatus();
+      setLoading(false);
+    };
 
-    // checkLoginStatus();
+    initializeAuth();
+  }, [checkLoginStatus]);
 
-    setIsAuthenticated(false);
-  }, []);
-
-  if (isAuthenticated === null) {
-    return null; // Optionally, return a loading spinner here
+  if (loading) {
+    return <LoadingIndicator />;
   }
 
   return (
