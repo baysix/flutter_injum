@@ -1,27 +1,47 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-//pages
-import DashScreen from './src/screens/dash/DashScreen';
-import LoginScreen from './src/screens/login/LoginScreen';
+import HomeStackNavigator from './src/navigation/HomeStackNavigator';
+import DashboardStackNavigator from './src/navigation/DashboardStackNavigator';
+import AuthStackNavigator from './src/navigation/AuthStackNavigator'; // Import the Auth stack
 
-//navigation types
-import {RootStackParamList} from './src/navigation/types';
-
-const Stack = createStackNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator();
 
 const App: React.FC = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    // const checkLoginStatus = async () => {
+    //   try {
+    //     const token = await AsyncStorage.getItem('userToken');
+    //     setIsAuthenticated(!!token);
+    //   } catch (e) {
+    //     setIsAuthenticated(false);
+    //   }
+    // };
+
+    // checkLoginStatus();
+
+    setIsAuthenticated(false);
+  }, []);
+
+  if (isAuthenticated === null) {
+    return null; // Optionally, return a loading spinner here
+  }
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Dash" component={DashScreen} />
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator>
+      {isAuthenticated ? (
+        <Tab.Navigator
+          initialRouteName="HomeTab"
+          screenOptions={{headerShown: false}}>
+          <Tab.Screen name="HomeTab" component={HomeStackNavigator} />
+          <Tab.Screen name="DashTab" component={DashboardStackNavigator} />
+        </Tab.Navigator>
+      ) : (
+        <AuthStackNavigator /> // Render the auth stack if not authenticated
+      )}
     </NavigationContainer>
   );
 };
