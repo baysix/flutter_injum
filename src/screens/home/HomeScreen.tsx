@@ -5,6 +5,7 @@ import HomeMenuList from './components/HomeMenuList';
 
 const HomeScreen: React.FC = () => {
   return (
+    // ㅔㅌ스트
     <SafeAreaView style={styles.container}>
       <HomeHeader />
       <HomeMenuList />
