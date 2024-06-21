@@ -14,7 +14,11 @@ const HomeStack = createStackNavigator<HomeStackParamList>();
 const HomeStackNavigator: React.FC = () => {
   return (
     <HomeStack.Navigator initialRouteName="Home">
-      <HomeStack.Screen name="Home" component={HomeScreen} />
+      <HomeStack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{headerShown: false}}
+      />
       <HomeStack.Screen name="Dash" component={DashScreen} />
     </HomeStack.Navigator>
   );
